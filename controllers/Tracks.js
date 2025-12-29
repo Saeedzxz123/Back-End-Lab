@@ -31,4 +31,40 @@ router.get('/', async (req,res)=>{
     }
 })
 
+
+
+
+router.get('/:id', async (req,res)=>{
+    try{
+        const {id} = req.params
+    const track = await Track.findById(id)
+    
+    if(!track){res.status(404).json({error: 'No track found'})}
+
+    else{res.status(200).json({track})}
+    }
+    catch(err){
+    console.log(err)
+    res.status(500).json({err: 'failed to get track'})
+    }
+})
+
+
+router.delete('/:id', async (req,res)=>{
+    try{  const {id} = req.params
+    const track = await Track.findByIdAndDelete(id)
+    if(!track){
+        res.status(404).json({error: 'track not found'})
+    }
+    else{
+        res.status(200).json({track})
+    }
+}
+catch(err){
+        console.log(err)
+  res.status(500).json({error: 'track cant be deleted'})}
+})
+
+
+
 module.exports = router
