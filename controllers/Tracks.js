@@ -65,6 +65,19 @@ catch(err){
   res.status(500).json({error: 'track cant be deleted'})}
 })
 
+router.put('/:id', async (req,res)=>{
+    try{
+    const {id} = req.params
+    const track = await Track.findByIdAndUpdate(id, req.body, {new:true})
+    if(!track){res.status(404).json({error:'track not found'})}
+    else{res.status(200).json({track})}
+    }
+    catch(err){
+        console.log(err)
+          res.status(500).json({error: 'track not found'})
+        }
 
+    }
+)
 
 module.exports = router
